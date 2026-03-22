@@ -137,9 +137,10 @@
     </style>
 </head>
 <body class="selection:bg-[#fce4ec] selection:text-[#d81b60]">
+    <!-- Background Sparkles -->
     <div id="floating-sparkles-container" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
 
-    <main>
+    <main class="relative z-10">
         <!-- Hero Section -->
         <section class="relative h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
             <div class="z-10 reveal">
@@ -151,9 +152,10 @@
                 </p>
             </div>
 
-            <!-- Celebration Spirit Placeholder -->
+            <!-- Celebration Spirit Character -->
             <div id="spirit-container" class="mt-12 z-10 reveal"></div>
 
+            <!-- Scroll Indicator -->
             <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#d81b60] animate-bounce">
                 <div class="w-px h-12 bg-[#d81b60] opacity-30 mx-auto"></div>
                 <span class="text-xs uppercase tracking-widest mt-2 block font-bold">Scroll</span>
@@ -214,6 +216,9 @@
                 <h3 class="text-4xl md:text-6xl font-cursive text-[#d81b60]">
                     I’m really glad to call you my friend
                 </h3>
+                <div class="pt-4">
+                  <p class="text-[#d81b60] font-cursive text-2xl opacity-80">- Prabhat</p>
+                </div>
                 <p class="text-[#5d4037] text-sm uppercase tracking-[0.5em] font-bold opacity-60">Happy Birthday</p>
             </div>
         </footer>
@@ -229,7 +234,7 @@
             "Has a truly positive and gentle spirit"
         ];
 
-        // --- Floating Sparkles ---
+        // --- Floating Sparkles Animation ---
         function createFloatingSparkles() {
             const container = document.getElementById('floating-sparkles-container');
             if (!container) return;
@@ -265,14 +270,17 @@
             }
         }
 
-        // --- Celebration Spirit ---
+        // --- Celebration Spirit Character Rendering ---
         function renderCelebrationSpirit() {
             const container = document.getElementById('spirit-container');
             if (!container) return;
 
             container.innerHTML = `
                 <div class="relative w-64 h-80 mx-auto flex flex-col items-center justify-center spirit-float">
+                    <!-- Glow Aura -->
                     <div class="absolute inset-0 bg-gradient-to-b from-[#fce4ec] to-transparent rounded-full blur-3xl opacity-40 scale-125"></div>
+                    
+                    <!-- Main Body -->
                     <div class="relative w-40 h-52 glass-card rounded-[5rem] flex flex-col items-center justify-center overflow-hidden border-white/60 spirit-squish">
                         <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none"></div>
                         <div class="relative z-10 flex flex-col items-center -mt-4">
@@ -291,6 +299,8 @@
                             <div class="w-1.5 h-1.5 bg-[#d81b60] opacity-10 rounded-full animate-pulse"></div>
                         </div>
                     </div>
+
+                    <!-- Floating Hands & Cake -->
                     <div class="absolute inset-0 pointer-events-none">
                         <div class="absolute left-4 top-1/2 w-8 h-8 glass-card rounded-full flex items-center justify-center border-white/40" style="animation: spirit-float 3s ease-in-out infinite">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#d81b60" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#d81b60] opacity-40"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
@@ -306,11 +316,14 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Shadow -->
                     <div class="mt-8 w-32 h-4 bg-[#5d4037] opacity-5 rounded-full blur-md" style="animation: spirit-squish 5s ease-in-out infinite"></div>
                     <div id="surround-stars" class="absolute inset-0 pointer-events-none"></div>
                 </div>
             `;
 
+            // Orbiting Stars
             const starsContainer = document.getElementById('surround-stars');
             if (starsContainer) {
                 for (let i = 0; i < 6; i++) {
@@ -336,7 +349,7 @@
             }
         }
 
-        // --- Traits Grid ---
+        // --- Traits Grid Rendering ---
         function renderTraits() {
             const grid = document.getElementById('traits-grid');
             if (!grid) return;
@@ -356,23 +369,28 @@
             });
         }
 
-        // --- Surprise Logic ---
+        // --- Surprise Button Logic ---
         function setupSurprise() {
             const btn = document.getElementById('surprise-btn');
             const burstContainer = document.getElementById('burst-container');
             const message = document.getElementById('surprise-message');
             if (!btn || !burstContainer || !message) return;
+            
             btn.addEventListener('click', () => {
                 message.classList.remove('hidden');
                 message.classList.add('reveal', 'active');
+                
+                // Sparkle Burst Effect
                 for (let i = 0; i < 20; i++) {
                     const sparkle = document.createElement('div');
                     sparkle.className = 'absolute pointer-events-none';
                     sparkle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#d81b60]"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>`;
                     burstContainer.appendChild(sparkle);
+                    
                     const x = Math.random() * 240 - 120;
                     const y = Math.random() * -240 - 60;
                     const rotate = Math.random() * 360;
+                    
                     const animation = sparkle.animate([
                         { transform: `translate(0, 0) scale(0) rotate(0deg)`, opacity: 1 },
                         { transform: `translate(${x}px, ${y}px) scale(1.5) rotate(${rotate}deg)`, opacity: 0 }
@@ -385,7 +403,7 @@
             });
         }
 
-        // --- Scroll Reveal ---
+        // --- Intersection Observer for Scroll Animations ---
         function setupScrollReveal() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -394,6 +412,7 @@
                     }
                 });
             }, { threshold: 0.1 });
+            
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
